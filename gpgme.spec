@@ -5,6 +5,7 @@
 %define major 11
 %define libname_orig %mklibname %{name}
 %define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 %define gpg_version 1.2.2
 %define gpgsm_version 1.9.6
@@ -45,15 +46,16 @@ Provides:	%{libname_orig} = %{version}-%{release}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
-%package	-n %{libname}-devel
+%package	-n %{develname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%mklibname %{name} 11 -d
 
-%description -n %{libname}-devel
+%description -n %{develname}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
@@ -67,6 +69,7 @@ that will use the %{name} library for crypto awareness.
 %configure2_5x --enable-static
 %make
 
+%check
 make check
 
 %install
@@ -83,19 +86,19 @@ rm -rf %{buildroot}
 %post -n %{libname} -p /sbin/ldconfig
 %postun -n %{libname} -p /sbin/ldconfig
 
-%post -n %{libname}-devel
+%post -n %{develname}
 %_install_info %{name}.info
 
-%postun -n %{libname}-devel
+%postun -n %{develname}
 %_remove_install_info %{name}.info
 
 
 %files -n %{libname}
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/lib*.so.*
+%{_libdir}/lib*.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc AUTHORS COPYING.LESSER ChangeLog NEWS README THANKS TODO
 %if %mdkversion >= 1020
@@ -112,6 +115,3 @@ rm -rf %{buildroot}
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
-
-
-
