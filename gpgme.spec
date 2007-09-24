@@ -1,5 +1,5 @@
 %define version 1.1.5
-%define rel 1
+%define rel 2
 %define release %mkrel %rel
 
 %define major 11
@@ -24,6 +24,7 @@ BuildRequires:	gnupg >= %{gpg_version}
 BuildRequires:	gnupg2 >= %{gpgsm_version}
 BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	libgpg-error-devel >= 0.5
+BuildRequires:  libglib2-devel >= 2.0.0
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
 %endif
