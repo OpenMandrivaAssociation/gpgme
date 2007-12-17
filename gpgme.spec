@@ -28,7 +28,6 @@ BuildRequires:  libglib2-devel >= 2.0.0
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
