@@ -1,5 +1,5 @@
-%define version 1.1.5
-%define rel 2
+%define version 1.1.6
+%define rel 1
 %define release %mkrel %rel
 
 %define major 11
