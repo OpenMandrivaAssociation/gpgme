@@ -1,7 +1,3 @@
-%define version 1.1.6
-%define rel 1
-%define release %mkrel %rel
-
 %define major 11
 %define libname_orig %mklibname %{name}
 %define libname %mklibname %{name} %{major}
@@ -12,11 +8,11 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	%{version}
-Release:	%{release}
+Version:	1.1.6
+Release:	%mkrel 1
 Source0:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2.sig
-License:	GPL
+License:	GPLv2+
 Group:		File tools
 URL:		http://www.gnupg.org/gpgme.html
 BuildRequires:	gnupg >= %{gpg_version}
@@ -24,7 +20,7 @@ BuildRequires:	gnupg >= %{gpg_version}
 BuildRequires:	gnupg2 >= %{gpgsm_version}
 BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	libgpg-error-devel >= 0.5
-BuildRequires:  libglib2-devel >= 2.0.0
+BuildRequires:	libglib2-devel >= 2.0.0
 %if %mdkversion >= 1020
 BuildRequires:	multiarch-utils >= 1.0.3
 %endif
@@ -34,7 +30,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
-%package	-n %{libname}
+%package -n %{libname}
 Summary:	GnuPG Made Easy (GPGME)
 Group:		System/Libraries
 Requires:	gnupg >= %{gpg_version}
@@ -43,11 +39,11 @@ Requires:	gnupg2 >= %{gpgsm_version}
 Provides:	%{name} = %{version}-%{release}
 Provides:	%{libname_orig} = %{version}-%{release}
 
-%description	-n %{libname}
+%description -n %{libname}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
-%package	-n %{develname}
+%package -n %{develname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -96,12 +92,11 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%doc COPYING
 %{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
 %defattr(-,root,root)
-%doc AUTHORS COPYING.LESSER ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS README THANKS TODO
 %if %mdkversion >= 1020
 %multiarch %{multiarch_bindir}/gpgme-config
 %endif
