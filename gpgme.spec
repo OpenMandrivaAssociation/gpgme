@@ -9,7 +9,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.1.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 Source0:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2.sig
 License:	GPLv2+
