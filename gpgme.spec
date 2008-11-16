@@ -8,13 +8,13 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.1.6
-Release:	%mkrel 2
-Source0:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2
-Source1:	ftp://ftp.gnupg.org/%{name}/%{name}-%{version}.tar.bz2.sig
+Version:	1.1.7
+Release:	%mkrel 1
 License:	GPLv2+
 Group:		File tools
 URL:		http://www.gnupg.org/gpgme.html
+Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
+Source1:	%{SOURCE0}.sig
 BuildRequires:	gnupg >= %{gpg_version}
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg2 >= %{gpgsm_version}
@@ -63,7 +63,9 @@ that will use the %{name} library for crypto awareness.
 %setup -q
 
 %build
-%configure2_5x --enable-static
+%configure2_5x \
+	--enable-static
+
 %make
 
 %check
