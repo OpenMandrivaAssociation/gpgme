@@ -9,7 +9,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.3.0
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPLv2+
 Group:		File tools
 URL:		http://www.gnupg.org/gpgme.html
@@ -22,9 +22,6 @@ BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	libassuan-devel
 BuildRequires:	libgpg-error-devel >= 0.5
 BuildRequires:	libglib2-devel >= 2.0.0
-%if %mdkversion >= 1020
-BuildRequires:	multiarch-utils >= 1.0.3
-%endif
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
@@ -75,9 +72,7 @@ make check
 rm -rf %{buildroot}
 %makeinstall_std
 
-%if %mdkversion >= 1020
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
-%endif
 
 %clean
 rm -rf %{buildroot}
@@ -103,9 +98,7 @@ rm -rf %{buildroot}
 %files -n %{develname}
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
-%if %mdkversion >= 1020
-%multiarch %{multiarch_bindir}/gpgme-config
-%endif
+%{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
 %{_libdir}/*.a
 %{_libdir}/*.la
