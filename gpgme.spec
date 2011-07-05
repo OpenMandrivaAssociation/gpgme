@@ -8,7 +8,7 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.3.0
+Version:	1.3.1
 Release:	%mkrel 3
 License:	GPLv2+
 Group:		File tools
@@ -19,7 +19,7 @@ BuildRequires:	gnupg >= %{gpg_version}
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg2 >= %{gpgsm_version}
 BuildRequires:	pth-devel >= 2.0.0
-BuildRequires:	libassuan-devel
+BuildRequires:	libassuan-devel >= 2.0.2
 BuildRequires:	libgpg-error-devel >= 0.5
 BuildRequires:	libglib2-devel >= 2.0.0
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
