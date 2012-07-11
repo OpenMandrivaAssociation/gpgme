@@ -2,27 +2,27 @@
 %define libname_orig %mklibname %{name}
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
+%define develnamest %mklibname %{name} -d -s
 
 %define gpg_version 1.2.2
 %define gpgsm_version 1.9.6
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.3.1
-Release:	%mkrel 3
+Version:	1.3.2
+Release:	1
 License:	GPLv2+
 Group:		File tools
 URL:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
-Source1:	%{SOURCE0}.sig
+Source1:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2.sig
 BuildRequires:	gnupg >= %{gpg_version}
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg2 >= %{gpgsm_version}
 BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	libassuan-devel >= 2.0.2
 BuildRequires:	libgpg-error-devel >= 0.5
-BuildRequires:	libglib2-devel >= 2.0.0
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
+BuildRequires:	glib2-devel >= 2.0.0
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -57,6 +57,25 @@ easier for applications.
 Install this package if you want to develop applications 
 that will use the %{name} library for crypto awareness.
 
+
+%package -n %{develnamest}
+Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
+Provides:	%{libname_orig}-devel-static = %{version}-%{release}
+Provides:	%{name}-devel-static = %{version}-%{release}
+Provides:	lib%{name}-devel-static = %{version}-%{release}
+
+
+%description -n %{develnamest}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
+Install this package if you want to develop applications 
+that will use the %{name} library for crypto awareness.
+It's static  lib.
+
 %prep
 %setup -q
 
@@ -74,16 +93,6 @@ rm -rf %{buildroot}
 
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
 %post -n %{develname}
 %_install_info %{name}.info
 
@@ -92,16 +101,15 @@ rm -rf %{buildroot}
 
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/lib*.so.%{major}*
 
+%files -n %{develnamest}
+
 %files -n %{develname}
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 %{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
 %{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/*.so
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
