@@ -10,7 +10,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.3.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 URL:		http://www.gnupg.org/gpgme.html
@@ -93,13 +93,6 @@ rm -rf %{buildroot}
 
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
 
-%post -n %{develname}
-%_install_info %{name}.info
-
-%postun -n %{develname}
-%_remove_install_info %{name}.info
-
-
 %files -n %{libname}
 %{_libdir}/lib*.so.%{major}*
 
@@ -118,3 +111,71 @@ rm -rf %{buildroot}
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
+
+
+%changelog
+* Wed Jul 11 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.3.2-1
++ Revision: 808836
+- version update 1.3.2
+
+* Tue Jul 05 2011 Lonyai Gergely <aleph@mandriva.org> 1.3.1-3
++ Revision: 688727
+- 1.3.1
+
+* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 1.3.0-3
++ Revision: 661668
+- multiarch fixes
+
+* Thu Dec 02 2010 Oden Eriksson <oeriksson@mandriva.com> 1.3.0-2mdv2011.0
++ Revision: 605495
+- rebuild
+
+* Mon Jan 11 2010 Lonyai Gergely <aleph@mandriva.org> 1.3.0-1mdv2010.1
++ Revision: 489739
+- 1.3.0
+
+* Tue Jun 30 2009 Nicolas Lécureuil <nlecureuil@mandriva.com> 1.2.0-1mdv2010.0
++ Revision: 390789
+- Update  to gpgme 1.2.0
+
+* Sun Jan 18 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.8-1mdv2009.1
++ Revision: 331039
+- update to new version 1.1.8
+
+* Sun Nov 16 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.7-1mdv2009.1
++ Revision: 303835
+- update to new version 1.1.7
+- fix ur for Source0
+
+* Tue Jun 17 2008 Thierry Vignaud <tv@mandriva.org> 1.1.6-2mdv2009.0
++ Revision: 221100
+- rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed Jan 23 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.6-1mdv2008.1
++ Revision: 157125
+- new license policy
+- do not package COPYING files
+- spec file clean
+- new version
+
+* Fri Dec 21 2007 Olivier Blin <blino@mandriva.org> 1.1.5-2mdv2008.1
++ Revision: 136461
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Mon Sep 24 2007 Andreas Hasenack <andreas@mandriva.com> 1.1.5-2mdv2008.0
++ Revision: 92576
+- added missing buildrequires (glib2-devel) + rebuild
+
+* Wed Aug 01 2007 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.5-1mdv2008.0
++ Revision: 57324
+- new devel library policy
+- make use of %%{major}
+- add %%check section
+- new version
+
