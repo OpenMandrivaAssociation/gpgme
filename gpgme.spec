@@ -1,24 +1,22 @@
-%define major	11
-%define libname		%mklibname %{name} %{major}
-%define libpthread	%mklibname %{name}_pthread %{major}
-%define devname		%mklibname %{name} -d
+%define major 11
+%define libname %mklibname %{name} %{major}
+%define libpthread %mklibname %{name}_pthread %{major}
+%define devname %mklibname %{name} -d
 
-%define gpg_version 1.2.2
 %define gpgsm_version 1.9.6
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.4.2
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2.sig
 
-BuildRequires:	gnupg >= %{gpg_version}
 # support for Cryptographic Message Syntax protocol
-BuildRequires:	gnupg2 >= %{gpgsm_version}
+BuildRequires:	gnupg >= %{gpgsm_version}
 BuildRequires:	libassuan-devel >= 2.0.2
 BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	pkgconfig(gpg-error)
@@ -31,9 +29,8 @@ easier for applications.
 %package -n %{libname}
 Summary:	GnuPG Made Easy (GPGME)
 Group:		System/Libraries
-Requires:	gnupg >= %{gpg_version}
 # support for Cryptographic Message Syntax protocol
-Requires:	gnupg2 >= %{gpgsm_version}
+Requires:	gnupg >= %{gpgsm_version}
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	%{_lib}gpgme11 < 1.3.2-3
 
