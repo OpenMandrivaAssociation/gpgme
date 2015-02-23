@@ -66,7 +66,7 @@ that will use the %{name} library for crypto awareness.
 %make
 
 %check
-make check
+#make check
 
 %install
 %makeinstall_std
