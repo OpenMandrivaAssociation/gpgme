@@ -62,7 +62,7 @@ that will use the %{name} library for crypto awareness.
 %setup -q
 
 %build
-%configure2_5x
+%configure
 %make
 
 %check
@@ -83,6 +83,7 @@ that will use the %{name} library for crypto awareness.
 %doc AUTHORS ChangeLog NEWS README THANKS TODO
 %{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
+%{_bindir}/gpgme-tool
 %{_libdir}/*.so
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
