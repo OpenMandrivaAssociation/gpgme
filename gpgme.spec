@@ -7,7 +7,7 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.5.4
+Version:	1.5.5
 Release:	1
 License:	GPLv2+
 Group:		File tools
