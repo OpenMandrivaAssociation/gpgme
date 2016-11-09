@@ -24,6 +24,7 @@ BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Test)
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
