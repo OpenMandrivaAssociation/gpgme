@@ -1,6 +1,8 @@
 %define major 11
+%define gpgmepp_major 6
 %define libname %mklibname %{name} %{major}
 %define libpthread %mklibname %{name}_pthread %{major}
+%define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
 %define devname %mklibname %{name} -d
 
 %define gpgsm_version 1.9.6
@@ -21,6 +23,7 @@ BuildRequires:	libassuan-devel >= 2.0.2
 BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(Qt5Core)
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -46,13 +49,22 @@ Group:		System/Libraries
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
+%package -n %{libgpgmepp}
+Summary:	GnuPG Made Easy (GPGME)
+Group:		System/Libraries
+
+%description -n %{libgpgmepp}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libpthread} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%{_lib}gpgme-devel-static = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Requires:	%{libpthread} = %{EVRD}
+Requires:	%{libgpgmepp} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
 %description -n %{devname}
 Install this package if you want to develop applications 
@@ -79,6 +91,9 @@ that will use the %{name} library for crypto awareness.
 %files -n %{libpthread}
 %{_libdir}/libgpgme-pthread.so.%{major}*
 
+%files -n %{libgpgmepp}
+%{_libdir}/libgpgmepp.so.%{gpgmepp_major}*
+
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
 %{multiarch_bindir}/gpgme-config
@@ -88,6 +103,8 @@ that will use the %{name} library for crypto awareness.
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
 %{_infodir}/*
+%dir %{_libdir}/cmake/Gpgmepp
+%{_libdir}/cmake/Gpgmepp/*.cmake
 %dir %{_datadir}/common-lisp/source/gpgme
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
