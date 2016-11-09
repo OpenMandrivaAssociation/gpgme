@@ -1,8 +1,10 @@
 %define major 11
 %define gpgmepp_major 6
+%define qgpgme_major 7
 %define libname %mklibname %{name} %{major}
 %define libpthread %mklibname %{name}_pthread %{major}
 %define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
+%define libqgpgme %mklibname qgpgme %{qgpgme_major}
 %define devname %mklibname %{name} -d
 
 %define gpgsm_version 1.9.6
@@ -58,12 +60,21 @@ Group:		System/Libraries
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
+%package -n %{libqgpgme}
+Summary:	GnuPG Made Easy (GPGME)
+Group:		System/Libraries
+
+%description -n %{libqgpgme}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Requires:	%{libpthread} = %{EVRD}
 Requires:	%{libgpgmepp} = %{EVRD}
+Requires:	%{libqgpgme} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
@@ -94,6 +105,9 @@ that will use the %{name} library for crypto awareness.
 
 %files -n %{libgpgmepp}
 %{_libdir}/libgpgmepp.so.%{gpgmepp_major}*
+
+%files -n %{libqgpgme}
+%{_libdir}/libqgpgme.so.%{qgpgme_major}*
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
