@@ -7,8 +7,8 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.6.0
-Release:	4
+Version:	1.7.1
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -65,7 +65,7 @@ that will use the %{name} library for crypto awareness.
 %configure
 %make
 
-%check
+#check
 #make check
 
 %install
@@ -80,7 +80,7 @@ that will use the %{name} library for crypto awareness.
 %{_libdir}/libgpgme-pthread.so.%{major}*
 
 %files -n %{devname}
-%doc AUTHORS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS NEWS README THANKS TODO
 %{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
@@ -92,4 +92,3 @@ that will use the %{name} library for crypto awareness.
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
-
