@@ -6,6 +6,7 @@
 %define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
 %define devgpgmepp %mklibname %{name}pp -d
 %define libqgpgme %mklibname qgpgme %{qgpgme_major}
+%define devqgpgme %mklibname qgpgme -d
 %define devname %mklibname %{name} -d
 
 %define gpgsm_version 1.9.6
@@ -85,12 +86,25 @@ easier for applications.
 Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
 
+%package -n %{devqgpgme}
+Summary:    GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:    Development/C++
+Requires: %{devname} = %{EVRD}
+Requires: %{libqgpgme} = %{EVRD}
+Conflicts:    kdepimlibs4-devel
+
+%description -n %{devqgpgme}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
+Install this package if you want to develop applications that will use
+the %{name} library for crypto awareness.
+
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Requires:	%{libpthread} = %{EVRD}
-Requires:	%{libqgpgme} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
@@ -133,6 +147,13 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_libdir}/libgpgmepp.so
 %dir %{_libdir}/cmake/Gpgmepp/
 %{_libdir}/cmake/Gpgmepp/*
+
+%files -n %{devqgpgme}
+%dir %{_includedir}/qgpgme
+%dir %{_includedir}/QGpgME
+%{_includedir}/qgpgme/*
+%{_includedir}/QGpgME/*
+%{_libdir}/libqgpgme.so
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
