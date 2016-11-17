@@ -4,6 +4,7 @@
 %define libname %mklibname %{name} %{major}
 %define libpthread %mklibname %{name}_pthread %{major}
 %define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
+%define devgpgmepp %mklibname %{name}pp -d
 %define libqgpgme %mklibname qgpgme %{qgpgme_major}
 %define devname %mklibname %{name} -d
 
@@ -12,7 +13,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.7.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -68,12 +69,27 @@ Group:		System/Libraries
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
+%package -n %{devgpgmepp}
+Summary:    GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:    Development/C++
+Requires: %{devname} = %{EVRD}
+Requires: %{libgpgmepp} = %{EVRD}
+Provides: %{name}pp-devel = %{EVRD}
+Provides: %{name}++-devel = %{EVRD}
+Conflicts:    kdepimlibs4-devel
+
+%description -n %{devgpgmepp}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
+Install this package if you want to develop applications that will use
+the %{name} library for crypto awareness.
+
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Requires:	%{libpthread} = %{EVRD}
-Requires:	%{libgpgmepp} = %{EVRD}
 Requires:	%{libqgpgme} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
@@ -97,6 +113,9 @@ that will use the %{name} library for crypto awareness.
 
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
 
+# Likely we don't need it
+rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
+
 %files -n %{libname}
 %{_libdir}/libgpgme.so.%{major}*
 
@@ -109,17 +128,22 @@ that will use the %{name} library for crypto awareness.
 %files -n %{libqgpgme}
 %{_libdir}/libqgpgme.so.%{qgpgme_major}*
 
+%files -n %{devgpgmepp}
+%{_includedir}/gpgme++/*
+%{_libdir}/libgpgmepp.so
+%dir %{_libdir}/cmake/Gpgmepp/
+%{_libdir}/cmake/Gpgmepp/*
+
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
 %{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
-%{_libdir}/*.so
+%{_libdir}/libgpgme.so
+%{_libdir}/libgpgme-pthread.so
 %{_datadir}/aclocal/*.m4
-%{_includedir}/*
+%{_includedir}/*.h
 %{_infodir}/*
-%dir %{_libdir}/cmake/Gpgmepp
-%{_libdir}/cmake/Gpgmepp/*.cmake
 %dir %{_datadir}/common-lisp/source/gpgme
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
