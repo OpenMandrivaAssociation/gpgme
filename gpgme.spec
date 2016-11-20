@@ -31,6 +31,10 @@ BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Test)
 
+# OK to disable for bootstrapping
+# Just causes QGpgme docs to be nicer
+BuildRequires:	graphviz
+
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
@@ -111,6 +115,7 @@ Summary:	Python bindings to GPG encryption
 Group:		Development/Python
 Requires:	%{libname} = %{EVRD}
 BuildRequires:	pkgconfig(python3)
+BuildRequires:	swig
 
 %description -n python-gpg
 Python bindings to GPG encryption
