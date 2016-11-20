@@ -2,19 +2,20 @@
 %define gpgmepp_major 6
 %define qgpgme_major 7
 %define libname %mklibname %{name} %{major}
-%define libpthread %mklibname %{name}_pthread %{major}
 %define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
 %define devgpgmepp %mklibname %{name}pp -d
 %define libqgpgme %mklibname qgpgme %{qgpgme_major}
 %define devqgpgme %mklibname qgpgme -d
 %define devname %mklibname %{name} -d
+# Doesn't exist anymore, but needs to be obsoleted
+%define libpthread %mklibname %{name}_pthread 11
 
 %define gpgsm_version 1.9.6
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.7.1
-Release:	2
+Version:	1.8.0
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -41,37 +42,31 @@ Group:		System/Libraries
 Requires:	gnupg >= %{gpgsm_version}
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	%{_lib}gpgme11 < 1.3.2-3
+Obsoletes:	%{libpthread} < %{EVRD}
 
 %description -n %{libname}
-GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
-easier for applications.
-
-%package -n %{libpthread}
-Summary:	GnuPG Made Easy (GPGME)
-Group:		System/Libraries
-
-%description -n %{libpthread}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
 %package -n %{libgpgmepp}
 Summary:	GnuPG Made Easy (GPGME)
 Group:		System/Libraries
+Obsoletes:	%{_lib}GppMePp-devel
 
 %description -n %{libgpgmepp}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
 %package -n %{libqgpgme}
-Summary:	GnuPG Made Easy (GPGME)
+Summary:	Qt bindings to GnuPG Made Easy (GPGME)
 Group:		System/Libraries
 
 %description -n %{libqgpgme}
-GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
-easier for applications.
+Qt bindings to GnuPG Made Easy (GPGME), a library designed to make access
+to GnuPG easier for applications.
 
 %package -n %{devgpgmepp}
-Summary:    GnuPG Made Easy (GPGME) Header files and libraries for development
+Summary:  GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:    Development/C++
 Requires: %{devname} = %{EVRD}
 Requires: %{libgpgmepp} = %{EVRD}
@@ -104,13 +99,21 @@ the %{name} library for crypto awareness.
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
-Requires:	%{libpthread} = %{EVRD}
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
 %description -n %{devname}
 Install this package if you want to develop applications 
 that will use the %{name} library for crypto awareness.
+
+%package -n python-gpg
+Summary:	Python bindings to GPG encryption
+Group:		Development/Python
+Requires:	%{libname} = %{EVRD}
+BuildRequires:	pkgconfig(python3)
+
+%description -n python-gpg
+Python bindings to GPG encryption
 
 %prep
 %setup -q
@@ -133,9 +136,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %files -n %{libname}
 %{_libdir}/libgpgme.so.%{major}*
 
-%files -n %{libpthread}
-%{_libdir}/libgpgme-pthread.so.%{major}*
-
 %files -n %{libgpgmepp}
 %{_libdir}/libgpgmepp.so.%{gpgmepp_major}*
 
@@ -154,6 +154,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_includedir}/qgpgme/*
 %{_includedir}/QGpgME/*
 %{_libdir}/libqgpgme.so
+%{_libdir}/cmake/QGpgme
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
@@ -161,7 +162,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_libdir}/libgpgme.so
-%{_libdir}/libgpgme-pthread.so
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*.h
 %{_infodir}/*
@@ -169,3 +169,10 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
+
+%files -n python-gpg
+%{_libdir}/python*/site-packages/gpg
+%{_libdir}/python*/site-packages/gpg*.egg-info
+%if "%_lib" != "lib"
+%{_prefix}/lib/python*/site-packages/gpg
+%endif
