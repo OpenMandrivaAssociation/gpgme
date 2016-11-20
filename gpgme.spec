@@ -15,12 +15,13 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.8.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2.sig
+Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
@@ -122,6 +123,7 @@ Python bindings to GPG encryption
 
 %prep
 %setup -q
+%apply_patches
 
 %build
 %configure
