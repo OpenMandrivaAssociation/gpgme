@@ -15,7 +15,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.9.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -78,6 +78,7 @@ Requires: %{libgpgmepp} = %{EVRD}
 Provides: %{name}pp-devel = %{EVRD}
 Provides: %{name}++-devel = %{EVRD}
 Conflicts:    kdepimlibs4-devel
+Obsoletes: %{_lib}GpgMePp-devel
 
 %description -n %{devgpgmepp}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
