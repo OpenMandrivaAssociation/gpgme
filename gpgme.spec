@@ -15,12 +15,11 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.9.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
-Source1:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2.sig
 Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
 
 # support for Cryptographic Message Syntax protocol
@@ -77,7 +76,7 @@ Requires: %{devname} = %{EVRD}
 Requires: %{libgpgmepp} = %{EVRD}
 Provides: %{name}pp-devel = %{EVRD}
 Provides: %{name}++-devel = %{EVRD}
-Conflicts:    kdepimlibs4-devel
+Conflicts: kdepimlibs4-devel >= 3:4.14.10
 Obsoletes: %{_lib}GpgMePp-devel
 
 %description -n %{devgpgmepp}
