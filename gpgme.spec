@@ -135,8 +135,6 @@ Python bindings to GPG encryption
 %install
 %makeinstall_std
 
-%multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
-
 # Likely we don't need it
 rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
@@ -165,7 +163,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
-%{multiarch_bindir}/gpgme-config
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_libdir}/libgpgme.so
