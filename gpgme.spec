@@ -182,11 +182,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
 
 %files -n python-gpg
-%{_libdir}/python*/site-packages/gpg
-%{_libdir}/python*/site-packages/gpg*.egg-info
-%if "%_lib" != "lib"
-%{_prefix}/lib/python*/site-packages/gpg
-%endif
+%{py_platsitedir}/gpg*
 
 %files doc
 %{_infodir}/*
