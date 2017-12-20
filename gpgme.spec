@@ -14,8 +14,8 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.9.0
-Release:	3
+Version:	1.10.0
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -121,6 +121,14 @@ BuildRequires:	swig
 %description -n python-gpg
 Python bindings to GPG encryption
 
+%package doc
+Summary:	Documentation for GnuPG Made Easy (GPGME)
+Group:		Books/Computer books
+Requires:	%{libname} = %{EVRD}
+
+%description doc
+Documentation for GnuPG Made Easy (GPGME).
+
 %prep
 %setup -q
 %apply_patches
@@ -135,7 +143,9 @@ Python bindings to GPG encryption
 %install
 %makeinstall_std
 
+%if %{mdvver} <= 3000000
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
+%endif
 
 # Likely we don't need it
 rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
@@ -165,21 +175,21 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
+%if %{mdvver} <= 3000000
 %{multiarch_bindir}/gpgme-config
+%endif
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_libdir}/libgpgme.so
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*.h
-%{_infodir}/*
 %dir %{_datadir}/common-lisp/source/gpgme
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
 
 %files -n python-gpg
-%{_libdir}/python*/site-packages/gpg
-%{_libdir}/python*/site-packages/gpg*.egg-info
-%if "%_lib" != "lib"
-%{_prefix}/lib/python*/site-packages/gpg
-%endif
+%{py_platsitedir}/gpg*
+
+%files doc
+%{_infodir}/*
