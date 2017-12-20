@@ -1,10 +1,11 @@
---- gpgme-1.9.0/lang/cpp/src/GpgmeppConfig.cmake.in.in.0000~	2017-04-21 21:37:07.321234343 +0200
-+++ gpgme-1.9.0/lang/cpp/src/GpgmeppConfig.cmake.in.in	2017-04-21 21:37:45.493578156 +0200
-@@ -63,7 +63,7 @@ add_library(Gpgmepp SHARED IMPORTED)
+diff -Naur gpgme-1.10.0/lang/cpp/src/GpgmeppConfig.cmake.in.in gpgme-1.10.0.tpg/lang/cpp/src/GpgmeppConfig.cmake.in.in
+--- gpgme-1.10.0/lang/cpp/src/GpgmeppConfig.cmake.in.in	2017-07-12 12:35:02.000000000 +0000
++++ gpgme-1.10.0.tpg/lang/cpp/src/GpgmeppConfig.cmake.in.in	2017-12-20 22:42:41.772037986 +0000
+@@ -63,7 +63,7 @@
  
  set_target_properties(Gpgmepp PROPERTIES
    INTERFACE_INCLUDE_DIRECTORIES "@resolved_includedir@/gpgme++;@resolved_includedir@"
--  INTERFACE_LINK_LIBRARIES "pthread;@resolved_libdir@/libgpgme.so;@LIBASSUAN_LIBS@"
+-  INTERFACE_LINK_LIBRARIES "pthread;@resolved_libdir@/libgpgme@libsuffix@;@LIBASSUAN_LIBS@"
 +  INTERFACE_LINK_LIBRARIES "pthread;-lgpgme;@LIBASSUAN_LIBS@"
    IMPORTED_LOCATION "@resolved_libdir@/libgpgmepp@libsuffix@"
  )
