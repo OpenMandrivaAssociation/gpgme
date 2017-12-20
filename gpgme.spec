@@ -143,6 +143,10 @@ Documentation for GnuPG Made Easy (GPGME).
 %install
 %makeinstall_std
 
+%if %{mdvver} <= 3000000
+%multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
+%endif
+
 # Likely we don't need it
 rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
@@ -171,6 +175,9 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
+%if %{mdvver} <= 3000000
+%{multiarch_bindir}/gpgme-config
+%endif
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_libdir}/libgpgme.so
