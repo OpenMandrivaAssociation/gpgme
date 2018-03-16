@@ -15,7 +15,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.10.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -43,7 +43,7 @@ easier for applications.
 Summary:	GnuPG Made Easy (GPGME)
 Group:		System/Libraries
 # support for Cryptographic Message Syntax protocol
-Requires:	gnupg >= %{gpgsm_version}
+Recommends:	gnupg >= %{gpgsm_version}
 Provides:	%{name} = %{version}-%{release}
 Conflicts:	%{_lib}gpgme11 < 1.3.2-3
 Obsoletes:	%{libpthread} < %{EVRD}
@@ -70,14 +70,14 @@ Qt bindings to GnuPG Made Easy (GPGME), a library designed to make access
 to GnuPG easier for applications.
 
 %package -n %{devgpgmepp}
-Summary:  GnuPG Made Easy (GPGME) Header files and libraries for development
-Group:    Development/C++
-Requires: %{devname} = %{EVRD}
-Requires: %{libgpgmepp} = %{EVRD}
-Provides: %{name}pp-devel = %{EVRD}
-Provides: %{name}++-devel = %{EVRD}
-Conflicts: kdepimlibs4-devel >= 3:4.14.10
-Obsoletes: %{_lib}GpgMePp-devel
+Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:		Development/C++
+Requires:	%{devname} = %{EVRD}
+Requires:	%{libgpgmepp} = %{EVRD}
+Provides:	%{name}pp-devel = %{EVRD}
+Provides:	%{name}++-devel = %{EVRD}
+Conflicts:	kdepimlibs4-devel >= 3:4.14.10
+Obsoletes:	%{_lib}GpgMePp-devel
 
 %description -n %{devgpgmepp}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -87,11 +87,11 @@ Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
 
 %package -n %{devqgpgme}
-Summary:    GnuPG Made Easy (GPGME) Header files and libraries for development
-Group:    Development/C++
-Requires: %{devname} = %{EVRD}
-Requires: %{libqgpgme} = %{EVRD}
-Conflicts:    kdepimlibs4-devel
+Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:		Development/C++
+Requires:	%{devname} = %{EVRD}
+Requires:	%{libqgpgme} = %{EVRD}
+Conflicts:	kdepimlibs4-devel
 
 %description -n %{devqgpgme}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
