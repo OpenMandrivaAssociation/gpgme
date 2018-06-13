@@ -15,7 +15,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.11.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -104,6 +104,7 @@ Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
 Requires:	pkgconfig(gpg-error)
+Requires:	libassuan-devel
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
