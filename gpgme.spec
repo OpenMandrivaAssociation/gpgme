@@ -15,7 +15,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.11.1
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -73,6 +73,7 @@ Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C++
 Requires:	%{devname} = %{EVRD}
 Requires:	%{libgpgmepp} = %{EVRD}
+Requires:	%{devqgpgme} = %{EVRD}
 Provides:	%{name}pp-devel = %{EVRD}
 Provides:	%{name}++-devel = %{EVRD}
 Conflicts:	kdepimlibs4-devel >= 3:4.14.10
