@@ -14,8 +14,8 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.11.1
-Release:	5
+Version:	1.12.0
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -142,18 +142,17 @@ Requires:	%{libname} = %{EVRD}
 Documentation for GnuPG Made Easy (GPGME).
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
 %configure
-%make
+%make_build
 
 #check
 #make check
 
 %install
-%makeinstall_std
+%make_install
 
 %if %{mdvver} <= 3000000
 %multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
