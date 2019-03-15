@@ -11,7 +11,7 @@
 %define libpthread %mklibname %{name}_pthread 11
 
 %define gpgsm_version 1.9.6
-%bcond_without qt5
+%bcond_with qt5
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
@@ -72,21 +72,6 @@ Group:		System/Libraries
 Qt bindings to GnuPG Made Easy (GPGME), a library designed to make access
 to GnuPG easier for applications.
 
-%package -n %{devgpgmepp}
-Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
-Group:		Development/C++
-Requires:	%{devname} = %{EVRD}
-Requires:	%{libgpgmepp} = %{EVRD}
-Requires:	%{devqgpgme} = %{EVRD}
-Provides:	%{name}pp-devel = %{EVRD}
-Provides:	%{name}++-devel = %{EVRD}
-Conflicts:	kdepimlibs4-devel >= 3:4.14.10
-Obsoletes:	%{_lib}GpgMePp-devel
-
-%description -n %{devgpgmepp}
-GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
-easier for applications.
-
 Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
 
@@ -104,6 +89,21 @@ easier for applications.
 Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
 %endif
+
+%package -n %{devgpgmepp}
+Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:		Development/C++
+Requires:	%{devname} = %{EVRD}
+Requires:	%{libgpgmepp} = %{EVRD}
+Requires:	%{devqgpgme} = %{EVRD}
+Provides:	%{name}pp-devel = %{EVRD}
+Provides:	%{name}++-devel = %{EVRD}
+Conflicts:	kdepimlibs4-devel >= 3:4.14.10
+Obsoletes:	%{_lib}GpgMePp-devel
+
+%description -n %{devgpgmepp}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
 
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
@@ -177,15 +177,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %if %{with qt5}
 %files -n %{libqgpgme}
 %{_libdir}/libqgpgme.so.%{qgpgme_major}*
-%endif
 
-%files -n %{devgpgmepp}
-%{_includedir}/gpgme++/*
-%{_libdir}/libgpgmepp.so
-%dir %{_libdir}/cmake/Gpgmepp/
-%{_libdir}/cmake/Gpgmepp/*
-
-%if %{with qt5}
 %files -n %{devqgpgme}
 %dir %{_includedir}/qgpgme
 %dir %{_includedir}/QGpgME
@@ -194,6 +186,13 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_libdir}/libqgpgme.so
 %{_libdir}/cmake/QGpgme
 %endif
+
+%files -n %{devgpgmepp}
+%{_includedir}/gpgme++/*
+%{_libdir}/libgpgmepp.so
+%dir %{_libdir}/cmake/Gpgmepp/
+%{_libdir}/cmake/Gpgmepp/*
+
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
