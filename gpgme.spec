@@ -11,6 +11,7 @@
 %define libpthread %mklibname %{name}_pthread 11
 
 %define gpgsm_version 1.9.6
+%bcond_without qt5
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
@@ -27,8 +28,10 @@ BuildRequires:	gnupg >= %{gpgsm_version}
 BuildRequires:	libassuan-devel >= 2.4.2
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(glib-2.0)
+%if %{with qt5}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Test)
+%endif
 
 # OK to disable for bootstrapping
 # Just causes QGpgme docs to be nicer
@@ -60,6 +63,7 @@ Obsoletes:	%{_lib}GppMePp-devel
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
 easier for applications.
 
+%if %{with qt5}
 %package -n %{libqgpgme}
 Summary:	Qt bindings to GnuPG Made Easy (GPGME)
 Group:		System/Libraries
@@ -99,6 +103,7 @@ easier for applications.
 
 Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
+%endif
 
 %package -n %{devname}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
@@ -169,8 +174,10 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %files -n %{libgpgmepp}
 %{_libdir}/libgpgmepp.so.%{gpgmepp_major}*
 
+%if %{with qt5}
 %files -n %{libqgpgme}
 %{_libdir}/libqgpgme.so.%{qgpgme_major}*
+%endif
 
 %files -n %{devgpgmepp}
 %{_includedir}/gpgme++/*
@@ -178,6 +185,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %dir %{_libdir}/cmake/Gpgmepp/
 %{_libdir}/cmake/Gpgmepp/*
 
+%if %{with qt5}
 %files -n %{devqgpgme}
 %dir %{_includedir}/qgpgme
 %dir %{_includedir}/QGpgME
@@ -185,6 +193,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_includedir}/QGpgME/*
 %{_libdir}/libqgpgme.so
 %{_libdir}/cmake/QGpgme
+%endif
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
