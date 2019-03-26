@@ -205,10 +205,12 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_libdir}/libgpgme.so
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*.h
+%{_libdir}/pkgconfig/gpgme*.pc
 %dir %{_datadir}/common-lisp/source/gpgme
 %{_datadir}/common-lisp/source/gpgme/gpgme-package.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
+%{_datadir}/common-lisp/source/gpgme/gpgme-grovel.lisp
 
 %files -n python-gpg
 %{py_platsitedir}/gpg*
