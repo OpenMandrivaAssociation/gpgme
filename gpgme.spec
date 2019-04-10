@@ -11,12 +11,12 @@
 %define libpthread %mklibname %{name}_pthread 11
 
 %define gpgsm_version 1.9.6
-%bcond_with qt5
+%bcond_without qt5
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.13.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
