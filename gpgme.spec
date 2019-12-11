@@ -10,6 +10,9 @@
 # Doesn't exist anymore, but needs to be obsoleted
 %define libpthread %mklibname %{name}_pthread 11
 
+# Python module not linked to libpython
+%global _disable_ld_no_undefined 1
+
 %define gpgsm_version 1.9.6
 %bcond_without qt5
 
