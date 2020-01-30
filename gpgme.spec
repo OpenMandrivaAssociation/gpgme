@@ -19,7 +19,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.13.1
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -128,6 +128,7 @@ Requires:	%{libname} = %{EVRD}
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	swig
 Requires:	gnupg >= 2.0
+Provides:	python3-gpg
 
 %description -n python-gpg
 Python bindings to GPG encryption
