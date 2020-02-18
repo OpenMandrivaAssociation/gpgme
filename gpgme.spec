@@ -28,7 +28,7 @@ Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
-BuildRequires:	libassuan-devel >= 2.4.2
+BuildRequires:	pkgconfig(libassuan) >= 2.4.2
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(glib-2.0)
 %if %{with qt5}
