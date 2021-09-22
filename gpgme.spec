@@ -25,6 +25,7 @@ Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
+Patch1:		gpgme-1.16.0-glibc-2.34.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
