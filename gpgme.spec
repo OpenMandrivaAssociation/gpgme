@@ -19,12 +19,14 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.17.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
+Patch1:		gpgme-1.17.0-python-3.11.patch
+Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
@@ -165,9 +167,11 @@ Documentation for GnuPG Made Easy (GPGME).
 %install
 %make_install
 
-%if %{mdvver} <= 3000000
-%multiarch_binaries %{buildroot}%{_bindir}/gpgme-config
-%endif
+# For some reason, make install gets the python 3.x (x >= 10)
+# install paths completely wrong
+export top_builddir="$(pwd)"
+cd lang/python
+python setup.py install --prefix=%{_prefix} --root=%{buildroot}
 
 # Likely we don't need it
 rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
@@ -200,9 +204,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
-%if %{mdvver} <= 3000000
-%{multiarch_bindir}/gpgme-config
-%endif
 %{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_bindir}/gpgme-json
