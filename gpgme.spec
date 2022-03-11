@@ -1,6 +1,6 @@
 %define major 11
 %define gpgmepp_major 6
-%define qgpgme_major 7
+%define qgpgme_major 15
 %define libname %mklibname %{name} %{major}
 %define libgpgmepp %mklibname %{name}pp %{gpgmepp_major}
 %define devgpgmepp %mklibname %{name}pp -d
@@ -18,8 +18,8 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.17.0
-Release:	2
+Version:	1.17.1
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -135,17 +135,6 @@ Provides:	python3-gpg
 %description -n python-gpg
 Python bindings to GPG encryption
 
-%package -n python2-gpg
-Summary:	Python 2.x bindings to GPG encryption
-Group:		Development/Python
-Requires:	%{libname} = %{EVRD}
-BuildRequires:	pkgconfig(python2)
-BuildRequires:	swig
-Requires:	gnupg >= 2.0
-
-%description -n python2-gpg
-Python 2.x bindings to GPG encryption
-
 %package doc
 Summary:	Documentation for GnuPG Made Easy (GPGME)
 Group:		Books/Computer books
@@ -219,9 +208,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n python-gpg
 %{py_platsitedir}/gpg*
-
-%files -n python2-gpg
-%{py2_platsitedir}/gpg*
 
 %files doc
 %{_infodir}/*
