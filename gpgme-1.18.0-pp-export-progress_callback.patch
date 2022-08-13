@@ -1,0 +1,22 @@
+diff -up gpgme-1.18.0/lang/cpp/src/callbacks.cpp.omv~ gpgme-1.18.0/lang/cpp/src/callbacks.cpp
+--- gpgme-1.18.0/lang/cpp/src/callbacks.cpp.omv~	2022-08-13 02:48:23.344452164 +0200
++++ gpgme-1.18.0/lang/cpp/src/callbacks.cpp	2022-08-13 02:48:48.629735604 +0200
+@@ -52,7 +52,7 @@ using GpgME::ProgressProvider;
+ using GpgME::PassphraseProvider;
+ using GpgME::DataProvider;
+ 
+-void progress_callback(void *opaque, const char *what,
++__attribute__((visibility("default"))) void progress_callback(void *opaque, const char *what,
+                        int type, int current, int total)
+ {
+     ProgressProvider *provider = static_cast<ProgressProvider *>(opaque);
+@@ -70,7 +70,7 @@ void progress_callback(void *opaque, con
+     } while(0)
+ #define wipememory(_ptr,_len) wipememory2(_ptr,0,_len)
+ 
+-gpgme_error_t passphrase_callback(void *opaque, const char *uid_hint, const char *desc,
++__attribute__((visibility("default"))) gpgme_error_t passphrase_callback(void *opaque, const char *uid_hint, const char *desc,
+                                   int prev_was_bad, int fd)
+ {
+     PassphraseProvider *provider = static_cast<PassphraseProvider *>(opaque);
+diff -up gpgme-1.18.0/lang/cpp/src/callbacks.h.omv~ gpgme-1.18.0/lang/cpp/src/callbacks.h
