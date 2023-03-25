@@ -18,14 +18,14 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.18.0
-Release:	2
+Version:	1.19.0
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
-Patch1:		gpgme-1.17.0-python-3.11.patch
+#Patch1:		gpgme-1.17.0-python-3.11.patch
 Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
 Patch3:		gpgme-1.18.0-pp-export-progress_callback.patch
 
@@ -194,7 +194,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
-%{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_bindir}/gpgme-json
 %{_libdir}/libgpgme.so
