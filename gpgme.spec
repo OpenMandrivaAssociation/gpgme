@@ -155,6 +155,8 @@ Documentation for GnuPG Made Easy (GPGME).
 #make check
 
 %install
+# (tpg) 2023-04-12 fix fir TEST FAILED: /builddir/build/BUILDROOT/gpgme-1.19.0-2.x86_64/usr/lib64/python3.11/site-packages/ does NOT support .pth files
+export SETUPTOOLS_USE_DISTUTILS=stdlib
 %make_install
 
 # For some reason, make install gets the python 3.x (x >= 10)
@@ -190,7 +192,6 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_libdir}/libgpgmepp.so
 %dir %{_libdir}/cmake/Gpgmepp/
 %{_libdir}/cmake/Gpgmepp/*
-
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
