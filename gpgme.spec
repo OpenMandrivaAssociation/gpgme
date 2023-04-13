@@ -19,20 +19,21 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.19.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
 Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
-Patch0:		gpgme-1.8.0-fix-gpgmepp-cmake-linkage.patch
 #Patch1:		gpgme-1.17.0-python-3.11.patch
-Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
-Patch3:		gpgme-1.18.0-pp-export-progress_callback.patch
+Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-don-t-add-extra-libraries-for-linking.patch
+Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
+Patch4:		gpgme-1.18.0-pp-export-progress_callback.patch
+Patch5:		0001-avoid-identifying-as-beta-FIXED.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
 BuildRequires:	pkgconfig(libassuan) >= 2.4.2
-BuildRequires:	pkgconfig(gpg-error)
+BuildRequires:	pkgconfig(gpg-error) >= 1.47
 BuildRequires:	pkgconfig(glib-2.0)
 %if %{with qt5}
 BuildRequires:	pkgconfig(Qt5Core)
@@ -63,7 +64,7 @@ easier for applications.
 %package -n %{libgpgmepp}
 Summary:	GnuPG Made Easy (GPGME)
 Group:		System/Libraries
-Obsoletes:	%{_lib}GppMePp-devel
+Obsoletes:	%{_lib}GppMePp-devel < 1.19.0-3
 
 %description -n %{libgpgmepp}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -105,7 +106,7 @@ Requires:	%{devqgpgme} = %{EVRD}
 Provides:	%{name}pp-devel = %{EVRD}
 Provides:	%{name}++-devel = %{EVRD}
 Conflicts:	kdepimlibs4-devel >= 3:4.14.10
-Obsoletes:	%{_lib}GpgMePp-devel
+Obsoletes:	%{_lib}GpgMePp-devel < 1.19.0-3
 
 %description -n %{devgpgmepp}
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -115,8 +116,6 @@ easier for applications.
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
-Requires:	pkgconfig(gpg-error)
-Requires:	libassuan-devel
 Provides:	%{name}-devel = %{EVRD}
 Obsoletes:	%{_lib}gpgme-devel-static < 1.7.1
 
@@ -146,9 +145,14 @@ Documentation for GnuPG Made Easy (GPGME).
 
 %prep
 %autosetup -p1
+# (tpg) this is neededf for patch 5
+./autogen.sh
 
 %build
-%configure
+%configure \
+	--disable-fd-passing \
+	--disable-gpgsm-test
+
 %make_build
 
 #check
@@ -195,6 +199,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 
 %files -n %{devname}
 %doc AUTHORS NEWS README THANKS TODO
+%{_bindir}/gpgme-config
 %{_bindir}/gpgme-tool
 %{_bindir}/gpgme-json
 %{_libdir}/libgpgme.so
