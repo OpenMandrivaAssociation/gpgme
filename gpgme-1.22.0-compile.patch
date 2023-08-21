@@ -1,0 +1,12 @@
+diff -up gpgme-1.22.0/lang/qt/tests/run-importjob.cpp.omv~ gpgme-1.22.0/lang/qt/tests/run-importjob.cpp
+--- gpgme-1.22.0/lang/qt/tests/run-importjob.cpp.omv~	2023-08-21 20:32:29.632146908 +0200
++++ gpgme-1.22.0/lang/qt/tests/run-importjob.cpp	2023-08-21 20:33:29.858740876 +0200
+@@ -34,7 +34,7 @@
+  #include "config.h"
+ #endif
+ 
+-#include <debug.h>
++#include "../src/debug.h"
+ #include <importjob.h>
+ #include <importresult.h>
+ #include <protocol.h>

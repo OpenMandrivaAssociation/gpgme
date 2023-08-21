@@ -1,19 +1,109 @@
-From b0eabea4b1232ee7f45d13b8add928d463f37444 Mon Sep 17 00:00:00 2001
-From: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
-Date: Wed, 29 Mar 2017 07:13:35 +0200
-Subject: [PATCH] fix stupid ax_python_devel
-
-References: https://git.savannah.gnu.org/gitweb/?p=autoconf-archive.git;a=commit;h=883a2abd5af5c96be894d5ef7ee6e9a2b8e64307
-Signed-off-by: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
----
- m4/ax_python_devel.m4 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/m4/ax_python_devel.m4 b/m4/ax_python_devel.m4
-index b990d5b3..318b089c 100644
---- a/m4/ax_python_devel.m4
-+++ b/m4/ax_python_devel.m4
-@@ -137,7 +137,7 @@ variable to configure. See ``configure --help'' for reference.
+diff -up gpgme-1.22.0/configure.2~ gpgme-1.22.0/configure
+--- gpgme-1.22.0/configure.2~	2023-08-21 19:53:00.150090647 +0200
++++ gpgme-1.22.0/configure	2023-08-21 19:55:58.513013063 +0200
+@@ -23374,7 +23374,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -24146,7 +24146,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -24918,7 +24918,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -25690,7 +25690,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -26462,7 +26462,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -27234,7 +27234,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -28006,7 +28006,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -28778,7 +28778,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -29550,7 +29550,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -30322,7 +30322,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+@@ -31094,7 +31094,7 @@ variable to configure. See \`\`configure
+ 	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
+ printf %s "checking for the distutils Python package... " >&6; }
+ 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
+-	if test -z "$ac_distutils_result"; then
++	if test $? -eq 0; then
+ 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ printf "%s\n" "yes" >&6; }
+ 	else
+diff -up gpgme-1.22.0/m4/ax_python_devel.m4.2~ gpgme-1.22.0/m4/ax_python_devel.m4
+--- gpgme-1.22.0/m4/ax_python_devel.m4.2~	2018-12-03 10:37:25.000000000 +0100
++++ gpgme-1.22.0/m4/ax_python_devel.m4	2023-08-21 19:53:00.087089967 +0200
+@@ -137,7 +137,7 @@ variable to configure. See ``configure -
  	#
  	AC_MSG_CHECKING([for the distutils Python package])
  	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
@@ -22,79 +112,3 @@ index b990d5b3..318b089c 100644
  		AC_MSG_RESULT([yes])
  	else
  		AC_MSG_RESULT([no])
-diff --git a/configure b/configure
-index 6200f91..6a3d6f1 100755
---- a/configure
-+++ b/configure
-@@ -19880,7 +19868,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -20510,7 +20498,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -21140,7 +21128,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -21770,7 +21758,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -22400,7 +22388,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -23030,7 +23018,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -23660,7 +23648,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else
-@@ -24290,7 +24278,7 @@ variable to configure. See \`\`configure --help'' for reference.
- 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for the distutils Python package" >&5
- $as_echo_n "checking for the distutils Python package... " >&6; }
- 	ac_distutils_result=`$PYTHON -c "import distutils" 2>&1`
--	if test -z "$ac_distutils_result"; then
-+	if test $? -eq 0; then
- 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
- $as_echo "yes" >&6; }
- 	else

@@ -18,7 +18,7 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.21.0
+Version:	1.22.0
 Release:	1
 License:	GPLv2+
 Group:		File tools
@@ -29,6 +29,7 @@ Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-don-t-add-e
 Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
 Patch4:		gpgme-1.18.0-pp-export-progress_callback.patch
 Patch5:		0001-avoid-identifying-as-beta-FIXED.patch
+Patch6:		gpgme-1.22.0-compile.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
