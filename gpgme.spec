@@ -6,6 +6,8 @@
 %define devgpgmepp %mklibname %{name}pp -d
 %define libqgpgme %mklibname qgpgme %{qgpgme_major}
 %define devqgpgme %mklibname qgpgme -d
+%define libqgpgme6 %mklibname qgpgmeqt6
+%define devqgpgme6 %mklibname qgpgmeqt6 -d
 %define devname %mklibname %{name} -d
 # Doesn't exist anymore, but needs to be obsoleted
 %define libpthread %mklibname %{name}_pthread 11
@@ -15,11 +17,12 @@
 
 %define gpgsm_version 1.9.6
 %bcond_without qt5
+%bcond_without qt6
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.23.2
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
@@ -39,6 +42,10 @@ BuildRequires:	pkgconfig(glib-2.0)
 %if %{with qt5}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Test)
+%endif
+%if %{with qt6}
+BuildRequires:	cmake(Qt6Core)
+BuildRequires:	cmake(Qt6Test)
 %endif
 
 # OK to disable for bootstrapping
@@ -98,15 +105,43 @@ Install this package if you want to develop applications that will use
 the %{name} library for crypto awareness.
 %endif
 
+%if %{with qt6}
+%package -n %{libqgpgme6}
+Summary:	Qt bindings to GnuPG Made Easy (GPGME)
+Group:		System/Libraries
+
+%description -n %{libqgpgme6}
+Qt bindings to GnuPG Made Easy (GPGME), a library designed to make access
+to GnuPG easier for applications.
+
+Install this package if you want to develop applications that will use
+the %{name} library for crypto awareness.
+
+%package -n %{devqgpgme6}
+Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
+Group:		Development/C++
+Requires:	%{devname} = %{EVRD}
+Requires:	%{libqgpgme6} = %{EVRD}
+# Headers seem to be identical
+Requires:	%{devqgpgme} = %{EVRD}
+
+%description -n %{devqgpgme6}
+GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
+easier for applications.
+
+Install this package if you want to develop applications that will use
+the %{name} library for crypto awareness.
+%endif
+
 %package -n %{devgpgmepp}
 Summary:	GnuPG Made Easy (GPGME) Header files and libraries for development
 Group:		Development/C++
 Requires:	%{devname} = %{EVRD}
 Requires:	%{libgpgmepp} = %{EVRD}
 Requires:	%{devqgpgme} = %{EVRD}
+Requires:	%{devqgpgme6} = %{EVRD}
 Provides:	%{name}pp-devel = %{EVRD}
 Provides:	%{name}++-devel = %{EVRD}
-Conflicts:	kdepimlibs4-devel >= 3:4.14.10
 Obsoletes:	%{_lib}GpgMePp-devel < 1.19.0-3
 
 %description -n %{devgpgmepp}
@@ -150,11 +185,35 @@ Documentation for GnuPG Made Easy (GPGME).
 ./autogen.sh
 
 %build
+export CONFIGURE_TOP=`pwd`
+mkdir build
+cd build
 %configure \
 	--disable-fd-passing \
-	--disable-gpgsm-test
+	--disable-gpgsm-test \
+%if %{with qt5}
+	--enable-languages=cpp,qt,python
+%else
+%if %{with qt6}
+	--enable-languages=cpp,cl,qt6,python
+%else
+	--enable-languages=cpp,cl,python
+%endif
+%endif
 
 %make_build
+cd ..
+
+%if %{with qt5} && %{with qt6}
+mkdir build-qt6
+cd build-qt6
+%configure \
+	--disable-fd-passing \
+	--disable-gpgsm-test \
+	--enable-languages=cpp,cl,qt6,python
+%make_build
+%endif
+
 
 #check
 #make check
@@ -162,12 +221,18 @@ Documentation for GnuPG Made Easy (GPGME).
 %install
 # (tpg) 2023-04-12 fix fir TEST FAILED: /builddir/build/BUILDROOT/gpgme-1.19.0-2.x86_64/usr/lib64/python3.11/site-packages/ does NOT support .pth files
 export SETUPTOOLS_USE_DISTUTILS=stdlib
-%make_install
+%make_install -C build
+
+%if %{with qt5} && %{with qt6}
+%make_install -C build-qt6
+%endif
 
 # For some reason, make install gets the python 3.x (x >= 10)
 # install paths completely wrong
 export top_builddir="$(pwd)"
-cd lang/python
+cp build/src/gpgme.h src/
+cp lang/python/*.{c,h,i} build/lang/python
+cd build/lang/python
 python setup.py install --prefix=%{_prefix} --root=%{buildroot}
 
 # Likely we don't need it
@@ -190,6 +255,15 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_includedir}/QGpgME/*
 %{_libdir}/libqgpgme.so
 %{_libdir}/cmake/QGpgme
+%endif
+
+%if %{with qt6}
+%files -n %{libqgpgme6}
+%{_libdir}/libqgpgmeqt6.so.%{qgpgme_major}*
+
+%files -n %{devqgpgme6}
+%{_libdir}/libqgpgmeqt6.so
+%{_libdir}/cmake/QGpgmeQt6
 %endif
 
 %files -n %{devgpgmepp}
