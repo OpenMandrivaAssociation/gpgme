@@ -232,6 +232,7 @@ export SETUPTOOLS_USE_DISTUTILS=stdlib
 export top_builddir="$(pwd)"
 cp build/src/gpgme.h src/
 cp lang/python/*.{c,h,i} build/lang/python
+ln -s ../build/src/.libs src/.libs
 cd build/lang/python
 python setup.py install --prefix=%{_prefix} --root=%{buildroot}
 
