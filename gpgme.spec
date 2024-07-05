@@ -22,11 +22,11 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.23.2
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		File tools
 Url:		http://www.gnupg.org/gpgme.html
-Source0:	ftp://ftp.gnupg.org/gcrypt/gpgme/%{name}-%{version}.tar.bz2
+Source0:	https://gnupg.org/ftp/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 #Patch1:		gpgme-1.17.0-python-3.11.patch
 Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-don-t-add-extra-libraries-for-linking.patch
 Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
