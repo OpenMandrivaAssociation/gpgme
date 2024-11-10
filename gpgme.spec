@@ -21,18 +21,18 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	1.23.2
-Release:	4
+Version:	1.24.0
+Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		https://www.gnupg.org/gpgme.html
 Source0:	https://gnupg.org/ftp/gcrypt/gpgme/%{name}-%{version}.tar.bz2
 #Patch1:		gpgme-1.17.0-python-3.11.patch
 Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-don-t-add-extra-libraries-for-linking.patch
-Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
+#Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
 Patch4:		gpgme-1.18.0-pp-export-progress_callback.patch
 Patch5:		0001-avoid-identifying-as-beta-FIXED.patch
-Patch6:		gpgme-1.22.0-compile.patch
+#Patch6:		gpgme-1.22.0-compile.patch
 
 # support for Cryptographic Message Syntax protocol
 BuildRequires:	gnupg >= %{gpgsm_version}
@@ -51,6 +51,10 @@ BuildRequires:	cmake(Qt6Test)
 # OK to disable for bootstrapping
 # Just causes QGpgme docs to be nicer
 BuildRequires:	graphviz
+# Just because we're too lazy to patch the
+# Makefiles to always omit py2 support. python2
+# will be removed soon anyway
+BuildConflicts:	python2
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -250,10 +254,10 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_libdir}/libqgpgme.so.%{qgpgme_major}*
 
 %files -n %{devqgpgme}
-%dir %{_includedir}/qgpgme
-%dir %{_includedir}/QGpgME
-%{_includedir}/qgpgme/*
-%{_includedir}/QGpgME/*
+%dir %{_includedir}/qgpgme-qt5
+%dir %{_includedir}/qgpgme-qt6
+%{_includedir}/qgpgme-qt5/*
+%{_includedir}/qgpgme-qt6/*
 %{_libdir}/libqgpgme.so
 %{_libdir}/cmake/QGpgme
 %endif
@@ -287,6 +291,7 @@ rm -rf %{buildroot}%{_libdir}/libgpgmepp.a
 %{_datadir}/common-lisp/source/gpgme/gpgme.asd
 %{_datadir}/common-lisp/source/gpgme/gpgme.lisp
 %{_datadir}/common-lisp/source/gpgme/gpgme-grovel.lisp
+%{_mandir}/man1/gpgme-json.1*
 
 %files -n python-gpg
 %{py_platsitedir}/gpg*
