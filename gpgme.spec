@@ -22,7 +22,7 @@
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
 Version:	1.24.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		File tools
 Url:		https://www.gnupg.org/gpgme.html
@@ -189,6 +189,8 @@ Documentation for GnuPG Made Easy (GPGME).
 ./autogen.sh
 
 %build
+export CC=gcc
+export CXX=g++
 export CONFIGURE_TOP=`pwd`
 mkdir build
 cd build
@@ -209,6 +211,8 @@ cd build
 cd ..
 
 %if %{with qt5} && %{with qt6}
+export CC=gcc
+export CXX=g++
 mkdir build-qt6
 cd build-qt6
 %configure \
