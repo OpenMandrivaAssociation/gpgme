@@ -7,7 +7,7 @@
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	2.0.0
+Version:	2.0.1
 Release:	1
 License:	GPLv2+
 Group:		File tools
@@ -99,6 +99,9 @@ ln -s libgpgme.so.%{major} %{buildroot}%{_libdir}/libgpgme.so.11
 %check
 %make_build check -C build
 %endif
+
+%files
+%{_bindir}/gnupg-key-manage
 
 %files -n %{libname}
 %{_libdir}/libgpgme.so.%{major}*
