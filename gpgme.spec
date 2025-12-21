@@ -21,6 +21,11 @@ Patch5:		0001-avoid-identifying-as-beta-FIXED.patch
 #Patch6:		gpgme-1.22.0-compile.patch
 
 # support for Cryptographic Message Syntax protocol
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	gnupg
 BuildRequires:	pkgconfig(libassuan) >= 2.4.2
 BuildRequires:	pkgconfig(gpg-error) >= 1.47
