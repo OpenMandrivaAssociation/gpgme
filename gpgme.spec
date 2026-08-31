@@ -2,34 +2,28 @@
 %define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
 
+# Avoid autogen.sh --find-version marking the release tarball as beta
+%define _disable_rebuild_configure 1
+
 # Python module not linked to libpython
 %global _disable_ld_no_undefined 1
 
 Summary:	GnuPG Made Easy (GPGME)
 Name:		gpgme
-Version:	2.1.2
+Version:	2.2.0
 Release:	1
 License:	GPLv2+
 Group:		File tools
 Url:		https://www.gnupg.org/gpgme.html
 Source0:	https://gnupg.org/ftp/gcrypt/gpgme/%{name}-%{version}.tar.bz2
-#Patch1:		gpgme-1.17.0-python-3.11.patch
-#Patch2:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-don-t-add-extra-libraries-for-linking.patch
-#Patch3:		https://src.fedoraproject.org/rpms/gpgme/raw/rawhide/f/0001-fix-stupid-ax_python_devel.patch
-#Patch4:		gpgme-1.18.0-pp-export-progress_callback.patch
-Patch5:		0001-avoid-identifying-as-beta-FIXED.patch
-#Patch6:		gpgme-1.22.0-compile.patch
 
-# support for Cryptographic Message Syntax protocol
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	libtool-base
-BuildRequires:	slibtool
-BuildRequires:	make
+BuildSystem:	autotools
+BuildOption:	--disable-fd-passing
+BuildOption:	--disable-gpgsm-test
+
 BuildRequires:	gnupg
 BuildRequires:	pkgconfig(libassuan) >= 2.4.2
 BuildRequires:	pkgconfig(gpg-error) >= 1.47
-BuildRequires:	pkgconfig(glib-2.0)
 
 %description
 GnuPG Made Easy (GPGME) is a library designed to make access to GnuPG
@@ -75,34 +69,21 @@ Requires:	%{libname} = %{EVRD}
 %description doc
 Documentation for GnuPG Made Easy (GPGME).
 
-%prep
-%autosetup -p1
-# (tpg) this is neededf for patch 5
-./autogen.sh
-
-%build
-export CONFIGURE_TOP=`pwd`
-mkdir build
-cd build
-%configure \
-	--disable-fd-passing \
-	--disable-gpgsm-test
-
-%make_build
-cd ..
-
-%install
-%make_install -C build
-
+%install -a
 # According to upstream maintainer:
 # "Yeah, an ABI break - It would be surprising if anyone is affected"
 # Might as well risk it for compatibility with old apps...
 # Bumped from 11 to 45 2025-06-03 after 6.0
 ln -s libgpgme.so.%{major} %{buildroot}%{_libdir}/libgpgme.so.11
 
-%if 0
+# Train on the in-tree suite: encrypt/decrypt/sign/verify/keylist/import/json.
+# Crypto itself lives in gpg; this profiles GPGME's protocol parser and I/O.
+%pgo
+%make_build -C _OMV_rpm_build check LIBTOOL=slibtool-shared
+
+%if ! %{cross_compiling}
 %check
-%make_build check -C build
+%make_build -C _OMV_rpm_build check LIBTOOL=slibtool-shared
 %endif
 
 %files
