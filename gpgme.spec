@@ -16,6 +16,8 @@ License:	GPLv2+
 Group:		File tools
 Url:		https://www.gnupg.org/gpgme.html
 Source0:	https://gnupg.org/ftp/gcrypt/gpgme/%{name}-%{version}.tar.bz2
+# Long-lived-context trainer: encrypt/decrypt/sign/verify/keylist on mail-sized data
+Source1:	pgo-train.c
 
 BuildSystem:	autotools
 BuildOption:	--disable-fd-passing
@@ -76,10 +78,42 @@ Documentation for GnuPG Made Easy (GPGME).
 # Bumped from 11 to 45 2025-06-03 after 6.0
 ln -s libgpgme.so.%{major} %{buildroot}%{_libdir}/libgpgme.so.11
 
-# Train on the in-tree suite: encrypt/decrypt/sign/verify/keylist/import/json.
-# Crypto itself lives in gpg; this profiles GPGME's protocol parser and I/O.
+# Profile the library as a mail/key-manager client, not the regression suite.
+# tests/gpg only supplies the demo keyring and dummy pinentry.
 %pgo
-%make_build -C _OMV_rpm_build check LIBTOOL=slibtool-shared
+%make_build -C _OMV_rpm_build/tests/gpg pinentry gpg.conf gpg-agent.conf pubring-stamp LIBTOOL=slibtool-shared
+export GNUPGHOME="$PWD/_OMV_rpm_build/tests/gpg"
+export GPG_AGENT_INFO=
+export LC_ALL=C
+# Dummy pinentry (passphrase "abc") so gpgme-json cannot hang on a missing TTY
+echo "pinentry-program $PWD/_OMV_rpm_build/tests/gpg/pinentry" >> "$GNUPGHOME/gpg-agent.conf"
+echo "allow-loopback-pinentry" >> "$GNUPGHOME/gpg-agent.conf"
+"$PWD/tests/start-stop-agent" --start
+lib=
+for p in _OMV_rpm_build/src/.libs/libgpgme.so _OMV_rpm_build/src/libgpgme.so; do
+	[ -e "$p" ] && lib=$p && break
+done
+test -n "$lib"
+export LD_LIBRARY_PATH="$(dirname "$lib")${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+# Do not instrument the trainer; only the just-built libgpgme is shipped
+${CC:-%{__cc}} -O2 -I_OMV_rpm_build/src -o pgo-train %{SOURCE1} "$lib" -lgpg-error
+./pgo-train
+json=
+for p in _OMV_rpm_build/src/.libs/gpgme-json _OMV_rpm_build/src/gpgme-json; do
+	[ -x "$p" ] && json=$p && break
+done
+if [ -n "$json" ]; then
+	for op in t-keylist t-encrypt t-sign t-verify t-decrypt t-encrypt-sign t-decrypt-verify t-export; do
+		f=tests/json/${op}.in.json
+		[ -f "$f" ] || continue
+		i=0
+		while [ $i -lt 8 ]; do
+			"$json" --single < "$f" >/dev/null
+			i=$((i + 1))
+		done
+	done
+fi
+"$PWD/tests/start-stop-agent" --stop
 
 %if ! %{cross_compiling}
 %check
